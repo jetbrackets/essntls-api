@@ -4,7 +4,6 @@ import { render } from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const el = document.getElementById('app')
-
 render(
   <App
     initialPage={JSON.parse(el.dataset.page)}

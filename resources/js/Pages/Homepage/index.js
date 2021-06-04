@@ -1,11 +1,13 @@
-import React, { useState} from "react";
-import Label from './components/Label'
+import OrderList from "./components/OrderList/OrderList";
+// import WrapperdMap from "./WrappedMap";
 
 const Homepage = () => {
-    return <div>Ok
-
-        <Label>Tet</Label>
+  return (
+    <div style={{ width: "100vw", height: "100vh" }}>
+      {/* <WrapperdMap /> */}
+      <OrderList />
     </div>
-}
+  );
+};
 
 export default Homepage;
