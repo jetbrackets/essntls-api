@@ -17,7 +17,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->whereType('admin')->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
@@ -25,7 +25,7 @@ class UserController extends Controller
             ]);
         }
         $token = $user->createToken($request->email)->plainTextToken;
-        return response()->json($token);
+        return response()->json(['token' => $token, 'user' => $user]);
     }
 
     public function logout()
