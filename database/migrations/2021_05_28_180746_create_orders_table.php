@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             $table->string('number');
             $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('customer_id');
+            $table->string('departure_address')->nullable();
+            $table->string('delivery_address')->nullable();
             $table->decimal('total_value');
             $table->string('status')->nullable();
             $table->timestamps();

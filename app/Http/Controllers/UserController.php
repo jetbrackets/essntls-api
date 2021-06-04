@@ -24,8 +24,8 @@ class UserController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-
-        return $user->createToken($request->email)->plainTextToken;
+        $token = $user->createToken($request->email)->plainTextToken;
+        return response()->json($token);
     }
 
     public function logout()

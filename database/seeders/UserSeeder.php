@@ -14,11 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('12345'),
-            'type' => 'admin'
-        ]);
+        DB::table('users')->truncate();
     }
 }
