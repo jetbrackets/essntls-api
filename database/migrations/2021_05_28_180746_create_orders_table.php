@@ -15,13 +15,18 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
             $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('customer_id');
             $table->string('departure_address')->nullable();
             $table->string('delivery_address')->nullable();
-            $table->decimal('total_value');
+            $table->decimal('total_value')->nullable();
+            $table->decimal('items')->nullable();
+            $table->decimal('shipping')->nullable();
+            $table->decimal('profit')->nullable());
             $table->string('status')->nullable();
+            $table->dateTime('accepted_in')->nullable();
+            $table->dateTime('arrival_in')->nullable();
+            $table->time('delivery_time')->nullable();
             $table->timestamps();
         });
     }
