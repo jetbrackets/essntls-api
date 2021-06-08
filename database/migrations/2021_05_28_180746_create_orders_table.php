@@ -19,13 +19,14 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->string('departure_address')->nullable();
             $table->string('delivery_address')->nullable();
-            $table->decimal('total_value')->nullable();
+            $table->decimal('amount')->nullable();
             $table->decimal('items')->nullable();
             $table->decimal('shipping')->nullable();
-            $table->decimal('profit')->nullable());
+            $table->decimal('commission')->nullable();
+            $table->decimal('profit')->nullable();
             $table->string('status')->nullable();
-            $table->dateTime('accepted_in')->nullable();
-            $table->dateTime('arrival_in')->nullable();
+            $table->time('accepted_in')->nullable();
+            $table->time('arrival_in')->nullable();
             $table->time('delivery_time')->nullable();
             $table->timestamps();
         });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin/v1')->group(function () {
         Route::get('/logout', [UserController::class, 'logout']);
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+        Route::get('/orders', [OrderController::class, 'index']);
     });
 });

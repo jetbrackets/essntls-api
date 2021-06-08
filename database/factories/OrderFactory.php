@@ -29,8 +29,14 @@ class OrderFactory extends Factory
             'customer_id' => rand(2, 25),
             'departure_address' => $this->faker->address,
             'delivery_address' => $this->faker->address,
-            'total_value' => $this->faker->randomFloat(2, 100, 300),
-
+            'amount' => $this->faker->randomFloat(2, 100, 300),
+            'items' => $this->faker->randomFloat(2, 100, 300),
+            'shipping' => $this->faker->randomFloat(2, 20, 50),
+            'commission' => $this->faker->randomFloat(2, 20, 50),
+            'profit' => $this->faker->randomFloat(2, 20, 50),
+            'accepted_in' => $this->faker->time(),
+            'arrival_in' => $this->faker->time(),
+            'delivery_time' => $this->faker->time(),
         ];
     }
 }
