@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,5 +34,19 @@ class UserController extends Controller
         $user = Auth::user();
 
         $user->tokens()->delete();
+    }
+
+    public function getDrivers()
+    {
+        $drivers = User::whereType('driver')->with(['address', 'paymentMethod'])->get();
+
+        return response()->json($drivers);
+    }
+
+    public function getCustomers()
+    {
+        $customers = User::whereType('customer')->with(['address', 'paymentMethod'])->get();
+
+        return response()->json($customers);
     }
 }
