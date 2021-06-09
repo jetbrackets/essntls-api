@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             OrderItemSeeder::class,
             AddressSeeder::class,
-            PaymentMethodSeeder::class
+            PaymentMethodSeeder::class,
+            RestockOrderSeeder::class,
+            RestockOrderItemSeeder::class,
         ]);
     }
 }

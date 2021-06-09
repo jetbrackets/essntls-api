@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         $drivers = User::whereType('driver')
-                        ->whereStatus(true)
+                        ->whereStatus('approved')
                         ->whereIsActive(true)
                         ->get();
 

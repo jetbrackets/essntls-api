@@ -36,6 +36,11 @@ class UserController extends Controller
         $user->tokens()->delete();
     }
 
+    /**
+     * Get All Drivers (Services Providers)
+     *
+     */
+
     public function getDrivers()
     {
         $drivers = User::whereType('driver')->with(['address', 'paymentMethod'])->get();
@@ -43,10 +48,42 @@ class UserController extends Controller
         return response()->json($drivers);
     }
 
+    /**
+     * Get All Customers
+     *
+     */
+
+
     public function getCustomers()
     {
         $customers = User::whereType('customer')->with(['address', 'paymentMethod'])->get();
 
         return response()->json($customers);
+    }
+    /**
+     * Block user
+     * @param Int $id
+     */
+
+    public function blockUser($id) {
+        $user = User::findOrFail($id);
+        $user->status = User::statusBlocked;
+        $user->save();
+
+        return response()->json(['message' => 'User blocked successfully!', 'user' => $user]);
+    }
+
+    /**
+     * Approve user
+     * @param Int $id
+     */
+
+
+    public function approveUser($id) {
+        $user = User::findOrFail($id);
+        $user->status = User::statusApproved;
+        $user->save();
+
+        return response()->json(['message' => 'User approved successfully!', 'user' => $user]);
     }
 }

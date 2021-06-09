@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\RestockOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +27,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/drivers', [AdminUserController::class, 'getDrivers']);
         Route::get('/customers', [AdminUserController::class, 'getCustomers']);
+        Route::get('/restock-orders', [RestockOrderController::class, 'index']);
+
+        //User
+        Route::prefix('user')->group(function () {
+            Route::get('/block/{id}', [AdminUserController::class, 'blockUser']);
+            Route::get('/approve/{id}', [AdminUserController::class, 'approveUser']);
+        });
     });
 });

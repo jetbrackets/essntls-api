@@ -23,6 +23,7 @@ class UserFactory extends Factory
     public function definition()
     {
         $type = ['driver', 'customer'];
+        $status = ['pendding', 'approved', 'blocked'];
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
@@ -30,7 +31,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'phone' => $this->faker->phoneNumber(),
             'type' => $type[rand(0, 1)],
-            'status' => rand(0, 1),
+            'status' => $status[rand(0, 2)],
             'is_active' => rand(0, 1),
             'remember_token' => Str::random(10),
         ];
