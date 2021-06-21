@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,9 +14,15 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    //Account Status
     const statusApproved = 'approved';
     const statusBlocked = 'blocked';
     const statusPendding = 'pendding';
+
+    //Account Type
+    const typeDriver = 'driver';
+    const typeCustomer = 'customer';
+    const typeAdmin = 'admin';
     /**
      * The attributes that are mass assignable.
      *
@@ -25,6 +32,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type',
+        'status',
+        'is_active',
+        'image',
+        'phone'
     ];
 
     /**
@@ -66,5 +78,24 @@ class User extends Authenticatable
         return $this->hasOne(PaymentMethod::class, 'user_id', 'id');
     }
 
+    /**
+     * Get all of the Orders for the Customer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function customerOrders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
+     /**
+     * Get all of the customer Orders for the Driver
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function driverOrders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'driver_id', 'id');
+    }
 
 }

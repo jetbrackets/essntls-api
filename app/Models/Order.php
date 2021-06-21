@@ -11,6 +11,11 @@ class Order extends Model
 {
     use HasFactory;
 
+    const orderDone = 'done';
+    const orderPending = 'pending';
+    const orderAccepted = 'accepted';
+    const orderCanceled = 'canceled';
+
     protected $fillable = [
         'driver_id',
         'customer_id',

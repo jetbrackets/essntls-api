@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,5 +86,37 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(['message' => 'User approved successfully!', 'user' => $user]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|unique:users,phone',
+            'password' => 'required',
+            'name' => 'required',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'type' => User::typeDriver,
+            'status' => User::statusPendding,
+            'is_active' => true,
+            'image' => NULL,
+            'phone' => $request->phone
+        ]);
+
+        Address::create([
+            'user_id' => $user->id,
+            'address' => $request->address,
+            'zip_code' => $request->zip_code,
+            'city' => $request->city,
+            'state' => $request->state,
+            'country' => $request->country,
+        ]);
+
+        return response()->json(['message' => 'User created successfully!', 'user' => $user]);
     }
 }

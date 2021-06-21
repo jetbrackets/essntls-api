@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RestockOrderController;
+use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
+use App\Http\Controllers\Driver\OrderController as DriverOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,32 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('user')->group(function () {
             Route::get('/block/{id}', [AdminUserController::class, 'blockUser']);
             Route::get('/approve/{id}', [AdminUserController::class, 'approveUser']);
+            Route::post('/store', [AdminUserController::class, 'store']);
+        });
+    });
+
+    //Routes Customers
+
+    Route::prefix('customer/v1')->group(function () {
+
+        //Order
+        Route::prefix('order')->group(function () {
+            Route::post('/store', [CustomerOrderController::class, 'store']);
+            Route::get('/my', [CustomerOrderController::class, 'myOrders']);
+            Route::get('/{id}/cancel', [CustomerOrderController::class, 'cancel']);
+        });
+    });
+
+    //Routes Drivers
+
+    Route::prefix('driver/v1')->group(function () {
+
+        //Order
+        Route::prefix('order')->group(function () {
+            Route::post('/{id}/accept', [DriverOrderController::class, 'accept']);
+            Route::get('/pending', [DriverOrderController::class, 'pending']);
+            Route::get('/my', [DriverOrderController::class, 'myOrders']);
+            Route::get('/{id}/cancel', [DriverOrderController::class, 'cancel']);
         });
     });
 });
