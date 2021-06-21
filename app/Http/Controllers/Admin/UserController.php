@@ -12,31 +12,6 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $user = User::where('email', $request->email)->whereType('admin')->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
-        }
-        $token = $user->createToken($request->email)->plainTextToken;
-        return response()->json(['token' => $token, 'user' => $user]);
-    }
-
-    public function logout()
-    {
-        $user = Auth::user();
-
-        $user->tokens()->delete();
-    }
-
     /**
      * Get All Drivers (Services Providers)
      *

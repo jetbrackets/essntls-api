@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -20,11 +21,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('admin/v1/login', [AdminUserController::class, 'login']);
+Route::post('/v1/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/v1/logout', [AuthController::class, 'logout']);
+
+    //Routes Admin
     Route::prefix('admin/v1')->group(function () {
-        Route::get('/logout', [AdminUserController::class, 'logout']);
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/drivers', [AdminUserController::class, 'getDrivers']);
