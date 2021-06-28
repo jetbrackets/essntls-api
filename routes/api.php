@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/v1/logout', [AuthController::class, 'logout']);
 
     //Routes Admin
-    Route::prefix('admin/v1')->group(function () {
+    Route::prefix('admin/v1')->middleware('admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/drivers', [AdminUserController::class, 'getDrivers']);
@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Routes Customers
 
-    Route::prefix('customer/v1')->group(function () {
+    Route::prefix('customer/v1')->middleware('customer')->group(function () {
 
         //Order
         Route::prefix('order')->group(function () {
@@ -56,7 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Routes Drivers
 
-    Route::prefix('driver/v1')->group(function () {
+    Route::prefix('driver/v1')->middleware('driver')->group(function () {
 
         //Order
         Route::prefix('order')->group(function () {

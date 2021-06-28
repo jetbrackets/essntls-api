@@ -70,13 +70,14 @@ class UserController extends Controller
             'phone' => 'required|unique:users,phone',
             'password' => 'required',
             'name' => 'required',
+            'type' => 'required'
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'type' => User::typeDriver,
+            'type' => $request->type,
             'status' => User::statusPendding,
             'is_active' => true,
             'image' => NULL,

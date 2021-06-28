@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderLog;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,13 @@ class OrderController extends Controller
 
         $order->save();
 
+        OrderLog::create([
+            'action' => 'Order Created',
+            'order_id' => $order->id,
+            'driver_id' => NULL,
+            'customer_id' => $user->id
+        ]);
+
         return response()->json(['message' => 'Order created successfully!', 'order' => $order]);
     }
 
@@ -77,6 +85,13 @@ class OrderController extends Controller
 
         $order->status = Order::orderCanceled;
         $order->save();
+
+        OrderLog::create([
+            'action' => 'Order Canceled By Customer',
+            'order_id' => $order->id,
+            'driver_id' => $order->driver_id,
+            'customer_id' => $order->user->id
+        ]);
 
         return response()->json(['message' => 'Order canceled successfully!','orders' => $order]);
     }

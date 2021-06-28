@@ -5,55 +5,13 @@ namespace App\Http\Controllers\Driver;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderLog;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function store(Request $request)
-    {
-        $user = Auth::user();
-
-        $order = Order::create([
-            'driver_id' => NULL,
-            'customer_id' => $user->id,
-            'departure_address' => NULL,
-            'delivery_address' => $request->delivery_address,
-            'status' => Order::orderPending
-        ]);
-
-        $amount = 0;
-        $items = 0;
-        $shipping = 0;
-        $commission = 0;
-
-        foreach ($request->products as $item) {
-            $product = Product::find($item['product_id']);
-
-            $item = OrderItem::create([
-                'product_id' => $item['product_id'],
-                'qty' => $item['qty'],
-                'value' => $item['qty'] * $product->price,
-                'order_id' => $order->id,
-            ]);
-
-            $amount = $amount + $item->value;
-            $items = $items + $item->value * 0.05;
-            $shipping = $shipping + $item->value * 0.02;
-            $commission = $commission + $item->value * 0.10;
-        }
-
-        $order->amount = $amount;
-        $order->items = $items;
-        $order->shipping = $shipping;
-        $order->commission = $commission;
-        $order->profit = $amount - $commission - $shipping - $items;
-
-        $order->save();
-
-        return response()->json(['message' => 'Order created successfully!', 'order' => $order]);
-    }
 
     public function myOrders()
     {
@@ -86,6 +44,13 @@ class OrderController extends Controller
         $order->departure_address = $request->address;
         $order->save();
 
+        OrderLog::create([
+            'action' => 'Order Accepted',
+            'order_id' => $order->id,
+            'driver_id' => $order->driver_id,
+            'customer_id' => $order->customer_id
+        ]);
+
         return response()->json(['message' => 'Order accepted successfully!','orders' => $order]);
     }
 
@@ -104,6 +69,13 @@ class OrderController extends Controller
 
         $order->status = Order::orderCanceled;
         $order->save();
+
+        OrderLog::create([
+            'action' => 'Order Canceled By Driver',
+            'order_id' => $order->id,
+            'driver_id' => $order->driver_id,
+            'customer_id' => $order->customer_id
+        ]);
 
         return response()->json(['message' => 'Order canceled successfully!','orders' => $order]);
     }
