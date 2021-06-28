@@ -12,7 +12,7 @@ class OrderController extends Controller
     {
         $orders = Order::with(['items', 'driver', 'customer'])
                         ->orderBy('id', 'desc')
-                        ->get();
+                        ->paginate();
 
         return response()->json($orders);
     }
