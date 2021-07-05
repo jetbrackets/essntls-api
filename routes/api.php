@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RestockOrderController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\Driver\OrderController as DriverOrderController;
+use App\Http\Controllers\Driver\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -72,6 +73,10 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/pending', [DriverOrderController::class, 'pending']);
             Route::get('/my', [DriverOrderController::class, 'myOrders']);
             Route::get('/{id}/cancel', [DriverOrderController::class, 'cancel']);
+        });
+
+        Route::prefix('profile')->group(function () {
+            Route::post('/active', [ProfileController::class, 'active']);
         });
     });
 });
