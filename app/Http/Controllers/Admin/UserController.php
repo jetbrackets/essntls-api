@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class UserController extends Controller
 
     public function getDrivers()
     {
-        $drivers = User::whereType('driver')->with(['address', 'paymentMethod'])->get();
+        $drivers = User::whereType('driver')->with(['address', 'paymentMethod', 'driverOrders', 'iventoryItems', 'reviews'])->get();
 
         return response()->json($drivers);
     }

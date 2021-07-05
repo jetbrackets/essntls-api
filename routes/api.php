@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/store', [CustomerOrderController::class, 'store']);
             Route::get('/my', [CustomerOrderController::class, 'myOrders']);
             Route::get('/{id}/cancel', [CustomerOrderController::class, 'cancel']);
+            Route::post('/{id}/review', [CustomerOrderController::class, 'createReview']);
         });
     });
 

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderLog;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,5 +95,18 @@ class OrderController extends Controller
         ]);
 
         return response()->json(['message' => 'Order canceled successfully!','orders' => $order]);
+    }
+
+    public function createReview(Request $request, $id)
+    {
+        $review = Review::create([
+            'description' => $request->description,
+            'order_id' => $id,
+            'driver_id' => $request->driver_id,
+            'customer_id' => Auth::user()->id,
+        ]);
+
+        return response()->json(['message' => 'Review created successfully!','review' => $review]);
+
     }
 }

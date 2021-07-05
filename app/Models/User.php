@@ -98,4 +98,27 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'driver_id', 'id');
     }
 
+
+
+     /**
+     * Get all of the Itens of Inventory for the Driver
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function iventoryItems(): HasMany
+    {
+        return $this->hasMany(Inventory::class, 'user_id', 'id');
+    }
+
+     /**
+     * Get all of the reviews for the Driver
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'driver_id', 'id');
+    }
+
+
 }
