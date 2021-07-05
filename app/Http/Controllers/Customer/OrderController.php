@@ -104,6 +104,7 @@ class OrderController extends Controller
             'order_id' => $id,
             'driver_id' => $request->driver_id,
             'customer_id' => Auth::user()->id,
+            'note' => $request->note
         ]);
 
         return response()->json(['message' => 'Review created successfully!','review' => $review]);

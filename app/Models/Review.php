@@ -14,5 +14,6 @@ class Review extends Model
         'order_id',
         'driver_id',
         'customer_id',
+        'note'
     ];
 }
