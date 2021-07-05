@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RestockOrderController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
@@ -39,6 +40,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/block/{id}', [AdminUserController::class, 'blockUser']);
             Route::get('/approve/{id}', [AdminUserController::class, 'approveUser']);
             Route::post('/store', [AdminUserController::class, 'store']);
+        });
+
+        //Product
+        Route::prefix('product')->group(function () {
+            Route::post('/store', [ProductController::class, 'store']);
+            Route::put('/update/{id}', [ProductController::class, 'update']);
+            Route::get('/', [ProductController::class, 'index']);
         });
     });
 
