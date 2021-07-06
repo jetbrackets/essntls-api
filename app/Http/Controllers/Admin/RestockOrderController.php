@@ -16,4 +16,48 @@ class RestockOrderController extends Controller
 
         return response()->json($orders);
     }
+
+    public function accept($id)
+    {
+        $order = RestockOrder::find($id);
+
+        $order->status = RestockOrder::orderAccepted;
+        $order->save();
+
+        return response()->json(['order'=>$order, 'message' => 'Order accepted successfully']);
+    }
+
+    public function cancel($id)
+    {
+        $order = RestockOrder::find($id);
+
+        $order->status = RestockOrder::orderCanceled;
+        $order->save();
+
+        return response()->json(['order'=>$order, 'message' => 'Order canceled successfully']);
+
+    }
+
+
+    public function shipping($id)
+    {
+        $order = RestockOrder::find($id);
+
+        $order->status = RestockOrder::orderShipping;
+        $order->save();
+
+        return response()->json(['order'=>$order, 'message' => 'Order shipping successfully']);
+
+    }
+
+    public function completed($id)
+    {
+        $order = RestockOrder::find($id);
+
+        $order->status = RestockOrder::orderDone;
+        $order->save();
+
+        return response()->json(['order'=>$order, 'message' => 'Order completed successfully']);
+
+    }
 }

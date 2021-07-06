@@ -49,6 +49,14 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::put('/update/{id}', [ProductController::class, 'update']);
             Route::get('/', [ProductController::class, 'index']);
         });
+
+        //Restock Orders
+        Route::prefix('restock-order')->group(function () {
+            Route::get('/accept/{id}', [RestockOrderController::class, 'accept']);
+            Route::get('/cancel/{id}', [RestockOrderController::class, 'cancel']);
+            Route::get('/shipping/{id}', [RestockOrderController::class, 'shipping']);
+            Route::get('/completed/{id}', [RestockOrderController::class, 'completed']);
+        });
     });
 
     //Routes Customers

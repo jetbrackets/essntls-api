@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RestockOrder extends Model
 {
+
+    const orderDone = 'completed';
+    const orderPending = 'pending';
+    const orderShipping = 'shipping';
+    const orderAccepted = 'accepted';
+    const orderCanceled = 'canceled';
+
+
     use HasFactory;
 
      /**
