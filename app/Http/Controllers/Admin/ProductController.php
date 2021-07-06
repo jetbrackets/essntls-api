@@ -60,7 +60,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'stock' => $request->stock,
             'price' => $request->price,
-            'purchase_price' => $request->price_purchase,
+            'purchase_price' => $request->purchase_price,
             'status' => $request->status,
             'image' => $nameFile
         ]);
