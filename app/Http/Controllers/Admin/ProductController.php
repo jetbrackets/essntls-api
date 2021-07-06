@@ -113,7 +113,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'stock' => $request->stock,
             'price' => $request->price,
-            'price_purchase' => $request->price_purchase,
+            'purchase_price' => $request->purchase_price,
             'status' => $request->status,
             'image' => $nameFile ?? $product->image
         ]);
