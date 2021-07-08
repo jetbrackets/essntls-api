@@ -96,4 +96,11 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User created successfully!', 'user' => $user]);
     }
+
+    public function getDriverReview($driverId)
+    {
+        $reviews = Review::where('driver_id', $driverId)->get();
+
+        return response()->json(['reviews' => $reviews]);
+    }
 }

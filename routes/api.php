@@ -23,7 +23,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::post('/v1/login', [AuthController::class, 'login']);
+Route::post('/v1/driver/register', [AuthController::class, 'registerDriver']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/v1/logout', [AuthController::class, 'logout']);
@@ -41,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/block/{id}', [AdminUserController::class, 'blockUser']);
             Route::get('/approve/{id}', [AdminUserController::class, 'approveUser']);
             Route::post('/store', [AdminUserController::class, 'store']);
+            Route::get('/driver/{driverId}/reviews', [AdminUserController::class, 'getDriverReview']);
         });
 
         //Product
