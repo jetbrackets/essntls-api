@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Order;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -99,8 +100,41 @@ class UserController extends Controller
 
     public function getDriverReview($driverId)
     {
-        $reviews = Review::where('driver_id', $driverId)->get();
+        $reviews = Review::where('driver_id', $driverId);
 
-        return response()->json(['reviews' => $reviews]);
+        $deliveries = Order::where('status', 'done')->where('driver_id', $driverId)->count();
+
+        $rating = $reviews->whereNotNull('note')->count();
+        $review = $reviews->whereNotNull('description')->count();
+
+
+        $fiveStars = $reviews->where('note', 5)->count();
+        $fourStars = $reviews->where('note', 4)->count();
+        $threeStars = $reviews->where('note', 3)->count();
+        $twoStars = $reviews->where('note', 2)->count();
+        $oneStars = $reviews->where('note', 1)->count();
+
+
+        $total = $reviews->count();
+        $deliveriesP = $total - ($total / 100 * $deliveries);
+        $ratingP = $total - ($total / 100 * $rating);
+        $reviewP = $total - ($total / 100 * $review);
+
+        $reviews = $reviews->get();
+
+        return response()->json([
+                                'reviews' => $reviews,
+                                'deliveries' => $deliveries,
+                                'rating' => $rating,
+                                'review' => $review,
+                                'deliveriesP' => $deliveriesP,
+                                'ratingP' => $ratingP,
+                                'reviewP' => $reviewP,
+                                'fiveStars' => $fiveStars,
+                                'fourStars' => $fourStars,
+                                'threeStars' => $threeStars,
+                                'twoStars' => $twoStars,
+                                'oneStars' => $oneStars,
+                            ]);
     }
 }
