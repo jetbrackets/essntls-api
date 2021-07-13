@@ -41,17 +41,15 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:users',
-            'phone' => 'required|unique:users,phone',
             'password' => 'required',
             'name' => 'required',
-            'type' => 'required'
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'type' => $request->type,
+            'type' => 'driver',
             'status' => User::statusPendding,
             'is_active' => true,
             'image' => NULL,
