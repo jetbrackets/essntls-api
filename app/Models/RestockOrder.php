@@ -38,4 +38,14 @@ class RestockOrder extends Model
     {
         return $this->belongsTo(User::class, 'driver_id', 'id');
     }
+
+    /**
+     * Get the user that owns the PaymentMethod
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'id');
+    }
 }

@@ -10,7 +10,7 @@ class RestockOrderController extends Controller
 {
     public function index()
     {
-        $orders = RestockOrder::with(['items', 'driver'])
+        $orders = RestockOrder::with(['items', 'items.product', 'driver', 'paymentMethod'])
                         ->orderBy('id', 'desc')
                         ->get();
 

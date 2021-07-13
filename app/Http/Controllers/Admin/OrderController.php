@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['items', 'driver', 'customer'])
+        $orders = Order::with(['items', 'items.product',  'driver', 'customer'])
                         ->orderBy('id', 'desc')
                         ->get();
 
