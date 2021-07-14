@@ -87,7 +87,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return response()->json($product, 200);
     }
 
     /**
