@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
         Route::get('/orders', [OrderController::class, 'index']);
         Route::get('/drivers', [AdminUserController::class, 'getDrivers']);
+        Route::get('/admins', [AdminUserController::class, 'getAdmins']);
         Route::get('/customers', [AdminUserController::class, 'getCustomers']);
         Route::get('/restock-orders', [RestockOrderController::class, 'index']);
 
@@ -45,6 +46,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/approve/{id}', [AdminUserController::class, 'approveUser']);
             Route::post('/store', [AdminUserController::class, 'store']);
             Route::get('/driver/{driverId}/reviews', [AdminUserController::class, 'getDriverReview']);
+
+            //ADMINS
+            Route::put('/admin/{id}/update', [AdminUserController::class, 'updateAdmin']);
+            Route::delete('/admin/{id}/delete', [AdminUserController::class, 'deleteAdmin']);
+            Route::get('/admin/{id}/edit', [AdminUserController::class, 'editAdmin']);
         });
 
         //Product

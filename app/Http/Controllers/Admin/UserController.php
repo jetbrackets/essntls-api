@@ -27,6 +27,19 @@ class UserController extends Controller
     }
 
     /**
+     * Get All Admins
+     *
+     */
+
+
+    public function getAdmins()
+    {
+        $admins = User::whereType('admin')->get();
+
+        return response()->json($admins);
+    }
+
+    /**
      * Get All Customers
      *
      */
@@ -136,5 +149,42 @@ class UserController extends Controller
                                 'twoStars' => $twoStars,
                                 'oneStars' => $oneStars,
                             ]);
+    }
+
+    public function editAdmin($id)
+    {
+
+        $admin = User::whereType('admin')->findOrFail($id);
+
+        return response()->json(['admin' => $admin]);
+    }
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users,email,'.$id.',id',
+            'phone' => 'required|unique:users,phone,'.$id.',id',
+            'password' => 'required',
+            'name' => 'required',
+        ]);
+
+        $admin = User::whereType('admin')->findOrFail($id);
+        $admin->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone
+        ]);
+
+        return response()->json(['message' => 'Admin updated successfully!', 'admin' => $admin]);
+    }
+
+    public function deleteAdmin($id)
+    {
+
+        $admin = User::whereType('admin')->findOrFail($id);
+        $admin->delete();
+
+        return response()->json(['message' => 'Admin deleted successfully!']);
     }
 }
