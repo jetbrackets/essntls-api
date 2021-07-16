@@ -113,27 +113,26 @@ class UserController extends Controller
 
     public function getDriverReview($driverId)
     {
-        $reviews = Review::where('driver_id', $driverId);
-
+        $query = Review::where('driver_id', $driverId);
+        $reviews = $query->get();
         $deliveries = Order::where('status', 'done')->where('driver_id', $driverId)->count();
 
-        $rating = $reviews->whereNotNull('note')->count();
-        $review = $reviews->whereNotNull('description')->count();
+        $rating = $query->whereNotNull('note')->count();
+        $review = $query->whereNotNull('description')->count();
 
 
-        $fiveStars = $reviews->where('note', 5)->count();
-        $fourStars = $reviews->where('note', 4)->count();
-        $threeStars = $reviews->where('note', 3)->count();
-        $twoStars = $reviews->where('note', 2)->count();
-        $oneStars = $reviews->where('note', 1)->count();
+        $fiveStars = $query->where('note', 5)->count();
+        $fourStars = $query->where('note', 4)->count();
+        $threeStars = $query->where('note', 3)->count();
+        $twoStars = $query->where('note', 2)->count();
+        $oneStars = $query->where('note', 1)->count();
 
 
-        $total = $reviews->count();
+        $total = $query->count();
         $deliveriesP = $total - ($total / 100 * $deliveries);
         $ratingP = $total - ($total / 100 * $rating);
         $reviewP = $total - ($total / 100 * $review);
 
-        $reviews = $reviews->get();
 
         return response()->json([
                                 'reviews' => $reviews,
